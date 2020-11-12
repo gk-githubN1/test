@@ -14,18 +14,13 @@ jobs:
     matrix:
       Python37:
         python.version: '3.7'
-  maxParallel: 1
+    maxParallel: 1
 
-steps:
-- task: UsePythonVersion@0
-  inputs:
-    versionSpec: '$(python.version)'
-    architecture: '2.7.18 (x64)'
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
-- script: pip install robotframework robotframework-seleniumlibrary && npm install chromedriver
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
-- powershell: robot
+  steps:
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: '$(python.version)'
+      architecture: 'x64'
+  - script: pip install robotframework robotframework-seleniumlibrary && npm install chromedriver
+    displayName: 'Run a multi-line script'
+  - powershell: robot --pythonpath . TestCases.robot.
